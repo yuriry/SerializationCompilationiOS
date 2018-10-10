@@ -1,0 +1,47 @@
+buildscript {
+    repositories {
+        google()
+    }
+    dependencies {
+        classpath "com.android.tools.build:gradle:$android_gradle_version"
+    }
+}
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-platform-android'
+apply plugin: 'kotlinx-serialization'
+
+repositories {
+    google()
+}
+
+group = 'org.example.serialization'
+version = 1.0
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 28
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime:$serialization_version"
+    expectedBy project(':common')
+
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
+}

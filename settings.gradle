@@ -1,0 +1,4 @@
+include ':common'
+include ':android'
+include ':ios'
+enableFeaturePreview('GRADLE_METADATA')

@@ -1,0 +1,43 @@
+buildscript {
+    repositories {
+        maven { url "https://dl.bintray.com/jetbrains/kotlin-native-dependencies" }
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-native-gradle-plugin:$kotlin_native_version"
+    }
+}
+
+apply plugin: 'kotlin-platform-native'
+apply plugin: 'kotlinx-serialization'
+
+sourceSets {
+    main {
+        component {
+            baseName = "Common"
+            targets = ['ios_arm64', 'ios_x64']
+            outputKinds = [FRAMEWORK]
+        }
+    }
+}
+
+/**
+ * Called by a custom build phase of Xcode project to copy output files to the iOS target folder
+ */
+task copyFramework() {
+    doLast {
+        String task = getProperty("konan.configuration.build.task")
+        def srcFile = tasks[task].outputFile
+        def targetDir = getProperty("konan.configuration.build.dir")
+        copy {
+            from srcFile.parent
+            into targetDir
+            include '*.framework/**'
+            include '*.framework.dSYM'
+        }
+    }
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlinx:kotlinx-serialization-runtime-native:$serialization_version"
+    expectedBy project(':common')
+}

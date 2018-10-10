@@ -1,0 +1,21 @@
+allprojects {
+    buildscript {
+        ext.kotlinPluginUrl = "https://dl.bintray.com/kotlin/kotlin-eap"
+        
+        repositories {
+            jcenter()
+            maven { url kotlinPluginUrl }
+        }
+        
+        dependencies {
+            classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+            classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
+        }
+    }
+    repositories {
+        jcenter()
+        maven { url kotlinPluginUrl }
+        maven { url "https://kotlin.bintray.com/kotlinx" }
+        maven { url "https://dl.bintray.com/kotlin/ktor" }
+    }
+}
